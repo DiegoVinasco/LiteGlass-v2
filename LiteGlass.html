@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LiteGlass</title>
+	<link rel="stylesheet" type="text/css" href="LiteGlass.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet">
+	<script type="text/javascript">
+		
+		window.onload = initialize;
+
+		var country  	= "us";
+		var city	= "Minneapolis";
+		var unit	= "metric";
+		var alarm_start	= 5;
+		var alarm_stop	= 8;
+		var darkTheme	= false;
+		var apikey	= '8e159274ff1876f6196852067e95e5e9';
+
+		
+		function initialize() {
+			// Schedule display updates
+			
+			updateClock();
+			updateWeather();
+			window.setInterval(updateClock,				 60000);
+			window.setInterval(updateWeather,			600000);
+			window.setInterval(updateQR(alarm_start, alarm_stop),	900000);
+		}
+
+		function updateClock() {
+			// Update clock time
+			var datetime = getDatetime();
+			document.getElementById("date").innerHTML = datetime[0];
+			document.getElementById("time").innerHTML = datetime[1];
+		}
+
+		function updateWeather() {
+			// Request weather information from http://api.openweathermap.org and update diplay with response
+
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					updateDisplay(JSON.parse(this.responseText));
+					console.log("response: " + this.responseText);
+				}
+			};
+			
+			// Make request and cache response
+			var requestString = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + ',' + country + '&units=' + unit + '&appid=' + apikey;
+			console.log("requesting: " + requestString);
+			xhttp.open("GET", requestString, true);
+			xhttp.send();
+			// informationCache = JSON.parse('{"coord": {"lon":-93.26,"lat":44.98}, "weather":[{"id":802, "main":"Clouds", "description":"scattered clouds", "icon":"03d"}], "base":"stations", "main":{"temp":2.73, "pressure":1019, "humidity":60, "temp_min":1, "temp_max":5}, "visibility":16093, "wind":{"speed":2.1,"deg":230}, "clouds":{"all":40}, "dt":1512233700, "sys":{"type":1, "id":1537, "message":0.1722, "country":"US", "sunrise":1512221592, "sunset":1512253941}, "id":5037649, "name":"Minneapolis", "cod":200}');
+		}
+
+		function updateDisplay(package) {
+			// Update display with given weather information
+			document.getElementById("temperature").innerHTML = formatTemperature(package.main.temp) + " &degC";
+			document.getElementById("description").innerHTML = formatDescription(package.weather[0].description);
+			document.getElementById("icon").src              = getIconPath(package.weather[0].icon);
+		}
+
+		function getDatetime() {
+			// Get current date and time, then format the strings for display
+
+			// Create a date array with the current time and date
+			var now = new Date();
+			var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+			// Create an array with the current month, day and time
+			var date = [ months[now.getMonth()], now.getDate() ];
+
+			// Determine suffix for the date
+			var dateSuffix = "";
+			switch (now.getDate()) {
+				case 1:
+					dateSuffix = "st";
+					break;
+				case 2:
+					dateSuffix = "nd";
+					break;
+				case 3:
+					dateSuffix = "rd";
+					break;
+				default:
+					dateSuffix = "th";
+			}
+			
+			// Create an array with the current hour, minute and second
+		  var time = [ now.getHours(), now.getMinutes() ];
+
+			// Determine AM or PM suffix based on the hour
+		  var timeSuffix = ( time[0] < 12 ) ? "AM" : "PM";
+
+			// Convert hour from military time
+		  time[0] = ( time[0] < 12 ) ? time[0] : time[0] - 12;
+		  time[0] = time[0] || 12;
+
+			// If seconds and minutes are less than 10, add a zero
+		  for ( var i = 1; i < 3; i++ ) {
+		    if ( time[i] < 10 ) {
+		      time[i] = "0" + time[i];
+		    }
+		  }
+
+			// Return the formatted strings
+			return [date.join(" ") + dateSuffix, time.join(":") + " " + timeSuffix];
+		}
+
+		function formatTemperature(t) {
+			// Multiply by 10 to isolate 2nd decimal place
+			t = t * 10;
+			// Truncate decimal
+			t = Math.round(t);
+			// Return rounded to .0 accuracy
+			return t / 10;
+		}
+
+		function formatDescription(d) {
+			// Capitalize words in a given weather description
+
+			// Break up description into tokens
+			var buffer = d.split(" ");
+			for (var i = buffer.length - 1; i >= 0; i--) {
+				// Iterate through tokens and capitalize first letter
+				buffer[i] = buffer[i].substr(0, 1).toUpperCase() + buffer[i].substr(1, buffer[i].length - 1);
+			}
+
+			// Concatenate and return the formatted tokens
+			return buffer.join(" ");
+		}
+
+		function getIconPath(icon) {
+			// Return the correct icon path and filename
+			var path = "icons/" + icon;
+
+			// Update path if using dark theme
+			if (darkTheme) { path += "_dark"; }
+
+			console.log("icon path: " + path + ".png");
+			return path + ".png";
+		}
+
+		function updateQR(start, stop) {
+			// Check if qr code should be displayed based on time of day and update display
+
+			var now = new Date();
+			if (now.getHours() >= start && now.getHours() <= stop) {
+				document.getElementById("qrcode").style.display = "block";
+			} else {
+				document.getElementById("qrcode").style.display = "none";
+			}
+		}
+
+
+	</script>
+</head>
+<body onclick="update()">
+
+
+<div id="container">
+	<img id="icon" src="http://via.placeholder.com/256x256">
+	<span id="weather">
+		<div id="temperature">temperature</div>
+		<div id="description">description</div>
+	</span>
+
+	<span id="locale">
+		<div id="date">date</div>
+		<div id="time">time</div>
+	</span>
+</div>
+
+<img id="qrcode" src="qr_code.jpg">
+
+</body>
+</html>
