@@ -30,17 +30,18 @@ body {
 }
 
 #temperature {
-	font-size: 116px;
+	font-size: 126px;
 }
 
 #description {
-	font-size: 56px;
+	font-size: 50px;
+	padding-left: 7px;
 }
 
 #date {
-	font-size: 66px;
+	font-size: 76px;
 }
 
 #time {
-	font-size: 92px;
+	font-size: 112px;
 }

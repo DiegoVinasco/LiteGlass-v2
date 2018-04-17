@@ -8,7 +8,7 @@ xte 'sleep 1' 'mousemove 2000 1500'
 
 while true
 do
-	#refresh every 20 minutes
-	xte 'sleep 1200' 'mousemove 2000 1500'
+	#refresh every 10 minutes
+	xte 'sleep 600' 'mousemove 2000 1500'
 done
 
