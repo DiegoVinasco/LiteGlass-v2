@@ -24,8 +24,9 @@ Edit your Raspberry Pi autostart file to open program on startup
 sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
 ```
 Add a new line with the path to the `run.sh` project file
-`home/pi/LiteGlass-v2/run.sh`
-
+```
+home/pi/LiteGlass-v2/run.sh
+```
 
 
 [Check out what it looks like so far!](http://s1250.photobucket.com/user/DiegoVinasco/slideshow/LiteGlass%20v2)
