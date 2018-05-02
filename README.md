@@ -1,4 +1,4 @@
-## LiteGlass-v2
+# LiteGlass-v2
 
 This  is graphical clock that also displays the weather and date. It is a port of my initial LiteGlass project from Python into HTML. I ported from Python because the Tkinter library was too constraining with UI spacing and did not allow for custom fonts.
 
@@ -7,7 +7,7 @@ I also added functionality for an "alarm clock" feature. It displays a QR code w
 The mirror is powered by a Raspberry Pi 2, a Visio 21" HD TV, an acrylic 1 way mirror, and a simple pine frame.
 
 
-# To initialize in Linux
+## To initialize in Linux
 
 First install xautomation and git
 ```
