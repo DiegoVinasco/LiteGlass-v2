@@ -7,7 +7,7 @@ I also added functionality for an "alarm clock" feature. It displays a QR code w
 The mirror is powered by a Raspberry Pi 2, a Visio 21" HD TV, an acrylic 1 way mirror, and a simple pine frame.
 
 
-#To initialize in Linux
+# To initialize in Linux
 
 First install xautomation and git
 ```
