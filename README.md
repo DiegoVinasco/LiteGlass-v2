@@ -57,3 +57,12 @@ home/pi/LiteGlass-v2/run.sh
 ```
 
 Now the application should start up automatically
+
+## License
+This repository is licensed under two licenses
+
+The images in the <a href="./img">./img</a> directory are licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+<br />
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
+
+The rest of this work is in the public domain and free to use under the [unlicense](./LICENSE.md).
