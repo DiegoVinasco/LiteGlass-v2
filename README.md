@@ -1,32 +1,41 @@
 # LiteGlass-v2
+A mirror with a UI that displays time, date, and weather information.
+The UI can also display a QR code for synchronizing with smart devices and scheduling applications, for instance, deactivating an alarm clock app by scanning a QR code.
 
-This  is graphical clock that also displays the weather and date. It is a port of my initial LiteGlass project from Python into HTML. I ported from Python because the Tkinter library was too constraining with UI spacing and did not allow for custom fonts.
+![left side view of the mirror](./img/leftside.jpg)
+![right side view of the mirror with QR code](./img/siderightQR.jpg)
+![back view of the mirror](./img/back.jpg)
+![bottom view of the mirror](./img/bottom.jpg)
 
-I also added functionality for an "alarm clock" feature. It displays a QR code which I can scan every morning to turn off my alarm.
+Inspired by [MichMich](https://github.com/MichMich)'s [Magic Mirror](https://github.com/MichMich/MagicMirror).
 
-The mirror is powered by a Raspberry Pi 2, a Visio 21" HD TV, an acrylic 1 way mirror, and a simple pine frame.
+An older Pythonic version of the project is available [here](https://github.com/DiegoVinasco/LiteGlass-Python).
 
 
-## To initialize in Linux
+## Materials
+This mirror is constructed from a:
+* Raspberry Pi 2
+* Visio 21" HD TV
+* Acrylic 1-way mirror
+* A wooden frame (made with simple pine and some varnish)
 
-First install xautomation and git
-```
+## Installation
+First, install xautomation and git on the Raspberry Pi
+```bash
 sudo apt-get install xautomation
 sudo apt-get install git
 ```
-clone this repository
-```
-cd home/pi/
+Clone this repository
+```bash
+cd home/pi
 git clone https://github.com/DiegoVinasco/LiteGlass-v2/
 ```
 Edit your Raspberry Pi autostart file to open program on startup
-```
+```bash
 sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
 ```
 Add a new line with the path to the `run.sh` project file
-```
+```bash
 home/pi/LiteGlass-v2/run.sh
 ```
-
-
-[Check out what it looks like so far!](http://s1250.photobucket.com/user/DiegoVinasco/slideshow/LiteGlass%20v2)
+Now the application should start up automatically
